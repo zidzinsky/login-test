@@ -2,8 +2,8 @@
 
 Test project
 
-## Prerequisites to run
-- Installed and Run PostgreSQL on local machine
+#### Prerequisites to run
+- Install and Run PostgreSQL on local machine
 - Create 'loging-api' db
 - Change required db connection params in './src/helpers/config.db.json'
 
