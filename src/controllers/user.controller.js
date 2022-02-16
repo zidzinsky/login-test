@@ -1,15 +1,17 @@
 const express = require('express');
+
 const router = express.Router();
 
 const validateRequest = require('../middleware/validate-request');
+const authorize = require('../middleware/authorize');
 const userService = require('../services/user.service');
 const createUserSchema = require('../schemas/create-user-schema');
 const authSchema = require('../schemas/auth-schema');
 
-// routes
 router.post('/', validateRequest(createUserSchema), register);
 router.post('/auth', validateRequest(authSchema), authenticate);
 router.get('/:id/unauth', unauthenticate);
+router.get('/current', authorize, getCurrent);
 
 async function authenticate(req, res, next) {
   try {
@@ -45,6 +47,12 @@ async function unauthenticate(req, res, next) {
   }
 
   res.status(204).end();
+}
+
+function getCurrent(req, res, next) {
+  const user = userService.getCurrent(req.user);
+
+  res.status(200).json(user);
 }
 
 module.exports = router;

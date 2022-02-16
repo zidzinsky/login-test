@@ -11,7 +11,6 @@ async function authenticate({ email, password }) {
     throw 'Email or password is incorrect';
   }
 
-  // authentication successful
   const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '5d' });
   user.token = token;
   await user.save();
@@ -45,6 +44,10 @@ async function unauthenticate(id) {
   return user;
 }
 
+function getCurrent(user) {
+  return { ...omitHash(user) };
+}
+
 function omitHash(user) {
   const { hash, ...userWithoutHash } = user;
   return userWithoutHash;
@@ -53,5 +56,6 @@ function omitHash(user) {
 module.exports = {
   authenticate,
   create,
-  unauthenticate
+  unauthenticate,
+  getCurrent
 };
