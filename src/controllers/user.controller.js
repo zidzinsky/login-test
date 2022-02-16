@@ -13,7 +13,7 @@ router.get('/:id/unauth', unauthenticate);
 
 async function authenticate(req, res, next) {
   try {
-    const user = await userService.auth(req.body);
+    const user = await userService.authenticate(req.body);
 
     res.status(200).json({
       success: true,
@@ -37,7 +37,7 @@ async function register(req, res, next) {
   });
 }
 
-function unauthenticate(req, res, next) {
+async function unauthenticate(req, res, next) {
   try {
     await userService.unauthenticate(req.params.id);
   } catch (e) {

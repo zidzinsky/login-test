@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const errorHandler = require('middleware/error-handler');
+const errorHandler = require('./middleware/error-handler');
 
 require('dotenv').config();
 const port = process.env.PORT;
@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // api routes
-app.use('/users', require('./controllers/users.controller'));
+app.use('/users', require('./controllers/user.controller'));
 
 // global error handler
 app.use(errorHandler);
